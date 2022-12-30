@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: raw-data-exporter
+spec:
+  selector:
+    matchLabels:
+      app: raw-data-exporter
+  template:
+    metadata:
+      labels:
+        app: raw-data-exporter
+    spec:
+      containers:
+      - name: raw-data-exporter
+        image: registry.gitlab.com/bikedashboard/raw-data-exporter:0.1  
+        env:
+          - name: DB_HOST
+            value: 10.133.75.95
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: db-password-deelfietsdashboard
+          - name: DB_USER
+            value: deelfietsdashboard
+          - name: REDIS_URL
+            value: 10.133.75.95
+          - name: SPACES_KEY
+            valueFrom:
+              secretKeyRef:
+                key: SPACES_KEY
+                name: do-spaces
+          - name: SPACES_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: SPACES_SECRET
+                name: do-spaces
+          - name: SENDGRID_API_KEY
+            valueFrom:
+              secretKeyRef:
+                key: SENDGRID_API_KEY
+                name: sendgrid-token
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "100m"
