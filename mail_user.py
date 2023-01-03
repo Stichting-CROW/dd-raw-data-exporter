@@ -4,14 +4,14 @@ from sendgrid.helpers.mail import Mail, Email, To, Content, From
 
 def mail_download_link(email, download_link):
     sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
-    from_email = Email("info@dashboarddeelmobiliteit.nl", "Dashboarddeelmobiliteit")
+    from_email = Email("info@dashboarddeelmobiliteit.nl", "Dashboard Deelmobiliteit")
     to_email = To(email)  # Change to your recipient
-    subject = "Export ruwe data dashboarddeelmobiliteit gereed"
+    subject = "Export ruwe data Dashboard Deelmobiliteit gereed"
 
     msg = """
 Beste lezer,
 
-De zojuist door u aangevraagde ruwe data export van het dashboarddeelmobiliteit staat klaar:
+De zojuist door u aangevraagde ruwe data export van het Dashboard Deelmobiliteit staat klaar:
 
 {} 
 
@@ -19,7 +19,7 @@ Let op deze link is 24 uur geldig.
 
 Met vriendelijke groet,
 
-Team dashboarddeelmobiliteit
+Team Dashboard Deelmobiliteit
     
     
     """.format(download_link)
