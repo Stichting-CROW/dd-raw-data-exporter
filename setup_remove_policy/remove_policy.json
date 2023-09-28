@@ -3,7 +3,7 @@
         {
             "ID": "Prune old files",
             "Status": "Enabled",
-            "Prefix": "",
+            "Prefix": "export",
             "Expiration": {
                 "Days": 1
             }
