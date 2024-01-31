@@ -16,14 +16,15 @@ def generate_trips(conn, requestParameters: export_request.ExportRequestParamete
 	            FROM zones WHERE zone_id IN {zone_ids}
         )    
             
-        SELECT system_id, bike_id, st_y(start_location) as lat_start_location, 
+        SELECT trips.system_id, bike_id, st_y(start_location) as lat_start_location, 
         st_x(start_location) as lng_start_location, st_y(end_location) as lat_end_location, 
         st_x(end_location) as lng_end_location, start_time, end_time, 
         st_distancesphere(start_location, end_location) as distance, EXTRACT(EPOCH FROM (end_time - start_time)) as duration_in_seconds,
         form_factor, propulsion_type
-        FROM trips, temp_a
+        FROM trips
+        CROSS JOIN temp_a
         JOIN vehicle_type
-        USING(vehicle_type_id)
+        ON trips.vehicle_type_id = vehicle_type.vehicle_type_id
         WHERE start_time >= {start_time}
         AND start_time < {end_time}
         AND (
@@ -34,7 +35,7 @@ def generate_trips(conn, requestParameters: export_request.ExportRequestParamete
             )
             AND (
                 false = {filter_on_system_id} or 
-                system_id IN {system_ids}
+                trips.system_id IN {system_ids}
             )
         )
         TO STDOUT With CSV HEADER DELIMITER ','
