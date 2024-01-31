@@ -10,9 +10,10 @@ def generate_park_events(conn, requestParameters: export_request.ExportRequestPa
     stmt = psycopg2.sql.SQL("""COPY 
     (SELECT system_id, bike_id,
     ST_Y(location) as lat, ST_X(location) as lon,
-    start_time, end_time, park_event_id, 
-    check_out_sample_id, check_in_sample_id  
+    start_time, end_time, form_factor, propulsion_type
     FROM park_events 
+    JOIN vehicle_type
+    ON vehicle_type_id = park_event_vehicle_type_id
     WHERE (start_time >= {start_time} and start_time < {end_time})
     AND (
             false = {filter_on_zones} 

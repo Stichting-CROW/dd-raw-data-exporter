@@ -19,8 +19,11 @@ def generate_trips(conn, requestParameters: export_request.ExportRequestParamete
         SELECT system_id, bike_id, st_y(start_location) as lat_start_location, 
         st_x(start_location) as lng_start_location, st_y(end_location) as lat_end_location, 
         st_x(end_location) as lng_end_location, start_time, end_time, 
-        st_distancesphere(start_location, end_location) as distance, EXTRACT(EPOCH FROM (end_time - start_time)) as duration_in_seconds
+        st_distancesphere(start_location, end_location) as distance, EXTRACT(EPOCH FROM (end_time - start_time)) as duration_in_seconds,
+        form_factor, propulsion_type
         FROM trips, temp_a
+        JOIN vehicle_type
+        USING(vehicle_type_id)
         WHERE start_time >= {start_time}
         AND start_time < {end_time}
         AND (
