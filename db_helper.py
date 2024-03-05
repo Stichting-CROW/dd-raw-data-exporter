@@ -3,7 +3,7 @@ from psycopg2.pool import SimpleConnectionPool
 
 def get_pg_pool():
     # Initialisation
-    conn_str = "dbname=deelfietsdashboard"
+    conn_str = "dbname=" + os.getenv("DB_NAME", "dashboarddeelmobiliteit")
 
     if "DB_HOST" in os.environ:
         conn_str += " host={} ".format(os.environ['DB_HOST'])

@@ -12,7 +12,7 @@ def generate_park_events(conn, requestParameters: export_request.ExportRequestPa
     ST_Y(location) as lat, ST_X(location) as lon,
     start_time, end_time, form_factor, propulsion_type
     FROM park_events 
-    JOIN vehicle_type
+    LEFT JOIN vehicle_type
     ON vehicle_type.vehicle_type_id = park_events.vehicle_type_id
     WHERE (start_time >= {start_time} and start_time < {end_time})
     AND (

@@ -23,7 +23,7 @@ def generate_trips(conn, requestParameters: export_request.ExportRequestParamete
         form_factor, propulsion_type
         FROM trips
         CROSS JOIN temp_a
-        JOIN vehicle_type
+        LEFT JOIN vehicle_type
         ON trips.vehicle_type_id = vehicle_type.vehicle_type_id
         WHERE start_time >= {start_time}
         AND start_time < {end_time}
