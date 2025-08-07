@@ -12,7 +12,7 @@ def generate_trips(conn, requestParameters: export_request.ExportRequestParamete
         (
         WITH temp_a (filter_area) AS
             (
-            SELECT st_union(area) 
+            SELECT st_union(ST_makeValid(area)) 
 	            FROM zones WHERE zone_id IN {zone_ids}
         )    
             

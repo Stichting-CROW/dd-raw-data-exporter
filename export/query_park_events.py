@@ -18,7 +18,7 @@ def generate_park_events(conn, requestParameters: export_request.ExportRequestPa
     AND (
             false = {filter_on_zones} 
             or ST_WITHIN(location, (
-                SELECT st_union(area) 
+                SELECT st_union(ST_makeValid(area))
 	            FROM zones WHERE zone_id IN {zone_ids}
             ))
         )
