@@ -8,7 +8,7 @@ def generate_park_events(conn, requestParameters: export_request.ExportRequestPa
     file_name = dir_name + "/park_events.csv"
     f = open(file_name, "w")
     stmt = psycopg2.sql.SQL("""COPY 
-    (SELECT park_events.system_id, bike_id,
+    (SELECT park_events.system_id,
     ST_Y(location) as lat, ST_X(location) as lon,
     start_time, end_time, form_factor, propulsion_type
     FROM park_events 
